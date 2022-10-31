@@ -1,12 +1,12 @@
 <template>
   <div class="container">
-    <h1>HomeView</h1>
+    <h1>ForgotPasswordView</h1>
   </div>
 </template>
 
 <script>
 export default {
-  name: "HomeView",
+  name: "ForgotPasswordView",
   components: {},
   data() {
     return {};
