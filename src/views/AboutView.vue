@@ -12,6 +12,12 @@ export default {
     return {};
   },
   methods: {},
+  beforeCreate() {
+    const user = localStorage.getItem("user");
+    if (!user) {
+      this.$router.push({ name: "LoginView" });
+    }
+  },
 };
 </script>
 
