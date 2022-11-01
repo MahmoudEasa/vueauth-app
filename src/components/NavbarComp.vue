@@ -16,30 +16,30 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <li v-if="user" class="ml-auto">Hello, {{ user.displayName }}</li>
+      <li v-if="userProfile" class="ml-auto">Hello, {{ userProfile.name }}</li>
 
       <ul class="navbar-nav ml-auto">
-        <li v-if="user" class="nav-item">
+        <li v-if="userProfile" class="nav-item">
           <router-link :to="{ name: 'HomeView' }" class="nav-link"
             >Home</router-link
           >
         </li>
-        <li v-if="user" class="nav-item">
+        <li v-if="userProfile" class="nav-item">
           <router-link :to="{ name: 'AboutView' }" class="nav-link"
             >About</router-link
           >
         </li>
-        <li v-if="!user" class="nav-item">
+        <li v-if="!userProfile" class="nav-item">
           <router-link :to="{ name: 'LoginView' }" class="nav-link"
             >Login</router-link
           >
         </li>
-        <li v-if="!user" class="nav-item">
+        <li v-if="!userProfile" class="nav-item">
           <router-link :to="{ name: 'RegisterView' }" class="nav-link"
             >Register</router-link
           >
         </li>
-        <li v-if="user" class="nav-item">
+        <li v-if="userProfile" class="nav-item">
           <button @click="logout" class="btn btn-info">Logout</button>
         </li>
       </ul>
@@ -48,35 +48,34 @@
 </template>
 
 <script>
-import firebase from "@/Firebase.js";
+// import firebase from "@/Firebase.js";
+import { mapState } from "vuex";
 
 export default {
   name: "NavbarComp",
   components: {},
   data() {
-    return {
-      user: "",
-    };
+    return {};
+  },
+  computed: {
+    ...mapState(["userProfile"]),
   },
   methods: {
     logout: function () {
-      firebase
-        .auth()
-        .signOut()
-        .then(() => {
-          firebase.auth().onAuthStateChanged(() => {
-            localStorage.removeItem("user");
-            window.location.reload();
-          });
-        });
+      this.$store.dispatch("logout");
+
+      // firebase
+      //   .auth()
+      //   .signOut()
+      //   .then(() => {
+      //     firebase.auth().onAuthStateChanged(() => {
+      //       localStorage.removeItem("user");
+      //       // window.location.reload();
+      //     });
+      //   });
     },
   },
-  created() {
-    const userFind = localStorage.getItem("user");
-    if (userFind) {
-      this.user = JSON.parse(userFind);
-    }
-  },
+  created() {},
 };
 </script>
 

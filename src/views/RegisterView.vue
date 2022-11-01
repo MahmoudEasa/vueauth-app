@@ -21,14 +21,25 @@
       class="shadow p-4 m-auto border rounded"
       @submit.prevent="handleSubmit"
     >
+      <h1 class="text-center pb-3">Register</h1>
       <div class="form-group">
-        <label for="username">Username</label>
+        <label for="name">Name</label>
         <input
-          v-model="user.username"
+          v-model="user.name"
           required
           type="text"
           class="form-control"
-          id="username"
+          id="name"
+        />
+      </div>
+      <div class="form-group">
+        <label for="title">Title</label>
+        <input
+          v-model="user.title"
+          required
+          type="text"
+          class="form-control"
+          id="title"
         />
       </div>
       <div class="form-group">
@@ -63,7 +74,7 @@
 </template>
 
 <script>
-import firebase from "@/Firebase.js";
+// import firebase from "@/Firebase.js";
 // import { useToast } from "vue-toastification";
 // const toast = useToast();
 
@@ -73,40 +84,42 @@ export default {
   data() {
     return {
       user: {
-        username: "",
+        name: "",
         email: "",
         password: "",
+        title: "",
       },
       error: "",
     };
   },
   methods: {
     handleSubmit: function () {
-      const { email, password, username } = this.user;
-
-      firebase
-        .auth()
-        .createUserWithEmailAndPassword(email, password)
-        .then((res) => {
-          res.user
-            .updateProfile({
-              displayName: username,
-            })
-            .then(() => {
-              this.$router.push({ name: "LoginView" });
-              this.error = "";
-            });
-        })
-        .catch((err) => {
-          this.error = err.message;
-        });
+      this.$store.dispatch("register", this.user).then(() => {
+        this.error = this.$store.state.error;
+      });
+      // const { email, password, name } = this.user;
+      // firebase
+      //   .auth()
+      //   .createUserWithEmailAndPassword(email, password)
+      //   .then((res) => {
+      //     res.user
+      //       .updateProfile({
+      //         displayName: name,
+      //       })
+      //       .then(() => {
+      //         this.$router.push({ name: "LoginView" });
+      //         this.error = "";
+      //       });
+      //   })
+      //   .catch((err) => {
+      //     this.error = err.message;
+      //   });
     },
   },
   beforeCreate() {
-    const user = localStorage.getItem("user");
-    if (user) {
-      this.$router.push({ name: "HomeView" });
-    }
+    // if (this.$store.state.user) {
+    //   this.$router.push({ name: "HomeView" });
+    // }
   },
 };
 </script>

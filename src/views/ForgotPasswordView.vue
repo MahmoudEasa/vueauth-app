@@ -71,8 +71,7 @@ export default {
     },
   },
   beforeCreate() {
-    const user = localStorage.getItem("user");
-    if (user) {
+    if (this.$store.state.user) {
       this.$router.push({ name: "HomeView" });
     }
   },

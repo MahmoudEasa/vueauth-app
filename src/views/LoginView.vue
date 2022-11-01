@@ -21,6 +21,7 @@
       class="shadow p-4 m-auto border rounded"
       @submit.prevent="handleSubmit"
     >
+      <h1 class="text-center pb-3">Login</h1>
       <div class="form-group">
         <label for="email">Email</label>
         <input
@@ -59,7 +60,7 @@
 </template>
 
 <script>
-import firebase from "@/Firebase.js";
+// import firebase from "@/Firebase.js";
 
 export default {
   name: "LoginView",
@@ -75,26 +76,29 @@ export default {
   },
   methods: {
     handleSubmit: function () {
-      const { email, password } = this.user;
+      this.$store.dispatch("login", this.user).then(() => {
+        this.error = this.$store.state.error;
+      });
 
-      firebase
-        .auth()
-        .signInWithEmailAndPassword(email, password)
-        .then((res) => {
-          localStorage.setItem("user", JSON.stringify(res.user));
-          window.location.reload();
-          this.error = "";
-        })
-        .catch((err) => {
-          this.error = err.message;
-        });
+      // const { email, password } = this.user;
+      // firebase
+      //   .auth()
+      //   .signInWithEmailAndPassword(email, password)
+      //   .then((res) => {
+      //     this.$store.commit("setUserProfile", res.user);
+      //     // localStorage.setItem("user", JSON.stringify(res.user));
+      //     // window.location.reload();
+      //     this.error = "";
+      //   })
+      //   .catch((err) => {
+      //     this.error = err.message;
+      //   });
     },
   },
   beforeCreate() {
-    const user = localStorage.getItem("user");
-    if (user) {
-      this.$router.push({ name: "HomeView" });
-    }
+    // if (this.$store.state.user) {
+    //   this.$router.push({ name: "HomeView" });
+    // }
   },
 };
 </script>

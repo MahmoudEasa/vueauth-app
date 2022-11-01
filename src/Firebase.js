@@ -18,6 +18,12 @@ const firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
-export const firestore = firebase.firestore();
+const db = firebase.firestore();
+const auth = firebase.auth();
+
+const userCollection = db.collection("users");
+const postsCollection = db.collection("posts");
+
+export { db, auth, userCollection, postsCollection };
 
 export default firebase;

@@ -13,10 +13,9 @@ export default {
   },
   methods: {},
   beforeCreate() {
-    const user = localStorage.getItem("user");
-    if (!user) {
-      this.$router.push({ name: "LoginView" });
-    }
+    // if (!this.$store.state.user) {
+    //   this.$router.push({ name: "LoginView" });
+    // }
   },
 };
 </script>
