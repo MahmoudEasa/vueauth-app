@@ -42,9 +42,12 @@
 </template>
 
 <script>
-import firebase from "@/Firebase.js";
-import { useToast } from "vue-toastification";
-const toast = useToast();
+// import { sendPasswordResetEmail } from "firebase/auth";
+// const auth = getAuth();
+// import { auth } from "@/Firebase";
+
+// import { useToast } from "vue-toastification";
+// const toast = useToast();
 
 export default {
   name: "ForgotPasswordView",
@@ -57,23 +60,17 @@ export default {
   },
   methods: {
     handleSubmit: function () {
-      firebase
-        .auth()
-        .sendPasswordResetEmail(this.email)
-        .then(() => {
-          toast("Check You Mail");
-          this.email = "";
-          this.error = "";
-        })
-        .catch((err) => {
-          this.error = err.message;
-        });
+      this.error = "";
+      this.$store.dispatch("forgotPasswordView", this.email).then(() => {
+        this.email = "";
+        this.error = this.$store.state.error;
+      });
     },
   },
   beforeCreate() {
-    if (this.$store.state.user) {
-      this.$router.push({ name: "HomeView" });
-    }
+    // if (this.$store.state.userProfile) {
+    //   this.$router.push({ name: "HomeView" });
+    // }
   },
 };
 </script>

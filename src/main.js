@@ -1,4 +1,5 @@
 import { createApp } from "vue";
+import { onAuthStateChanged } from "firebase/auth";
 import Toast from "vue-toastification";
 import App from "./App.vue";
 import router from "./router";
@@ -14,7 +15,7 @@ const options = {
 };
 
 let app;
-auth.onAuthStateChanged((user) => {
+onAuthStateChanged(auth, (user) => {
   if (!app) {
     app = createApp(App)
       .use(Toast, options)
@@ -25,5 +26,6 @@ auth.onAuthStateChanged((user) => {
 
   if (user) {
     store.dispatch("fetchUserProfile", user);
+    store.dispatch("getDataAction");
   }
 });
