@@ -156,7 +156,7 @@ const store = createStore({
 
     async createPost({ state }, content) {
       try {
-        addDoc(fb.postsCollection, {
+        await addDoc(fb.postsCollection, {
           createOn: new Date(),
           content,
           userId: auth.currentUser.uid,
@@ -180,6 +180,7 @@ const store = createStore({
 
     async deletePost(_, id) {
       try {
+        console.log(getDoc(doc(fb.postsCollection, id)));
         await deleteDoc(doc(fb.postsCollection, id));
         getData();
         toast("Deleted Is Done");
