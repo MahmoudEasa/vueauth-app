@@ -179,6 +179,19 @@ const store = createStore({
       // });
     },
 
+    async updatePost(_, data) {
+      try {
+        const postData = await getDoc(doc(fb.postsCollection, data.id));
+        const postUpdated = { ...postData.data(), content: data.content };
+        await setDoc(doc(fb.postsCollection, data.id), postUpdated);
+
+        getData();
+        toast("Updated Is Done");
+      } catch (err) {
+        toast.error(err.message);
+      }
+    },
+
     async deletePost(_, id) {
       let deleted;
       try {

@@ -20,11 +20,28 @@
             </h5>
             <p class="card-title">
               <strong>Content:</strong><br />
-              {{ trimLength(postData.content) }}
+              {{ postData.content }}
             </p>
             <button
+              @click="this.$router.push({ name: `PostsListView` })"
+              class="btn btn-info"
+            >
+              Back
+            </button>
+            <button
+              @click="
+                this.$router.push({
+                  name: `EditPostView`,
+                  params: { id: postData.id },
+                })
+              "
+              class="btn btn-primary mx-2"
+            >
+              Edit
+            </button>
+            <button
               @click="deletePostMethod(postData.id)"
-              class="btn btn-primary"
+              class="btn btn-danger"
             >
               Delete
             </button>
@@ -64,16 +81,6 @@ export default {
         let date = val.toDate();
         return moment(date).fromNow();
         // return moment(date).format("MMMM Do YYYY, h:mm:ss a");
-      };
-    },
-
-    trimLength() {
-      return (val) => {
-        if (val.length <= 200) {
-          return val;
-        } else {
-          return val.slice(0, 200) + "...";
-        }
       };
     },
   },

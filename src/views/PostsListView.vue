@@ -22,16 +22,27 @@
               <strong>Content:</strong><br />
               {{ trimLength(post.content) }}
             </p>
-            <button @click="deletePost(post.id)" class="btn btn-primary">
-              Delete
-            </button>
             <button
               @click="
                 this.$router.push({ name: `PostView`, params: { id: post.id } })
               "
-              class="btn btn-primary ml-2"
+              class="btn btn-info"
             >
               View
+            </button>
+            <button
+              @click="
+                this.$router.push({
+                  name: `EditPostView`,
+                  params: { id: post.id },
+                })
+              "
+              class="btn btn-primary mx-2"
+            >
+              Edit
+            </button>
+            <button @click="deletePost(post.id)" class="btn btn-danger">
+              Delete
             </button>
             <!-- <router-link :to="{ name: 'PostView', param: post.id }">
             </router-link> -->

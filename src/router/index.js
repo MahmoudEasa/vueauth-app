@@ -5,6 +5,7 @@ import LoginView from "../views/LoginView.vue";
 import RegisterView from "../views/RegisterView.vue";
 import PostsListView from "../views/PostsListView.vue";
 import PostView from "../views/PostView.vue";
+import EditPostView from "../views/EditPostView.vue";
 
 import { auth } from "@/Firebase";
 
@@ -29,6 +30,14 @@ const routes = [
     path: "/posts/:id",
     name: "PostView",
     component: PostView,
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  {
+    path: "/editPost/:id",
+    name: "EditPostView",
+    component: EditPostView,
     meta: {
       requiresAuth: true,
     },
