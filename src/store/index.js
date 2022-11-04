@@ -24,6 +24,7 @@ const toast = useToast();
 const auth = getAuth();
 
 const getData = async () => {
+  store.state.loading = true;
   try {
     const q = query(fb.postsCollection, orderBy("createOn", "desc"));
 
@@ -36,6 +37,9 @@ const getData = async () => {
     });
 
     store.commit("setPosts", postArray);
+
+    store.state.loading = false;
+    console.log(store.state.loading);
   } catch (err) {
     toast.error(err.message);
   }
@@ -57,7 +61,9 @@ const store = createStore({
     // userProfile: JSON.parse(localStorage.getItem("user")),
     userProfile: null,
     posts: [],
+    postsFiltered: [],
     error: "",
+    loading: false,
   },
   getters: {},
   mutations: {
@@ -70,11 +76,21 @@ const store = createStore({
     setError: (state, val) => {
       state.error = val;
     },
+    searchPost: (state, val) => {
+      const reg = new RegExp(val, "i");
+      const filteredPosts = state.posts.filter((post) =>
+        post.userName.match(reg)
+      );
+
+      state.postsFiltered = filteredPosts;
+      // console.log(state.postsFiltered);
+    },
   },
   actions: {
     getDataAction() {
       getData();
     },
+
     async login({ dispatch, commit }, form) {
       try {
         const { user } = await signInWithEmailAndPassword(
@@ -192,11 +208,12 @@ const store = createStore({
       }
     },
 
-    async deletePost(_, id) {
+    async deletePost({ state }, id) {
       let deleted;
       try {
         await deleteDoc(doc(fb.postsCollection, id));
         getData();
+        state.loading = false;
         toast("Deleted Is Done");
         deleted = true;
       } catch (err) {

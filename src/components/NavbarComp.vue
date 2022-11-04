@@ -18,6 +18,16 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <li v-if="userProfile" class="ml-auto">Hello, {{ userProfile.name }}</li>
 
+      <div v-if="userProfile" class="ml-auto">
+        <input
+          class="form-control"
+          placeholder="Search By Name"
+          type="text"
+          :on-change="handleSearch()"
+          v-model.trim="searchData"
+        />
+      </div>
+
       <ul class="navbar-nav ml-auto">
         <li v-if="userProfile" class="nav-item">
           <router-link :to="{ name: 'HomeView' }" class="nav-link"
@@ -55,7 +65,9 @@ export default {
   name: "NavbarComp",
   components: {},
   data() {
-    return {};
+    return {
+      searchData: "",
+    };
   },
   computed: {
     ...mapState(["userProfile"]),
@@ -73,6 +85,11 @@ export default {
       //       // window.location.reload();
       //     });
       //   });
+    },
+
+    handleSearch() {
+      // console.log(this.searchData);
+      this.$store.commit("searchPost", this.searchData);
     },
   },
   created() {},

@@ -7,9 +7,10 @@
           class="card-img-top"
           alt="photo"
         />
-        <h5 class="card-title" v-if="!posts.length">Loading...</h5>
+        <h5 class="card-title" v-if="loading">Loading...</h5>
+        <h5 class="card-title" v-else-if="!postsFiltered.length">No Posts</h5>
         <div v-else>
-          <div class="card-body" v-for="post in posts" :key="post.userId">
+          <div class="card-body" v-for="post in postsFiltered" :key="post.id">
             <h5 class="card-title text-center">
               <strong class="mb-1 d-block">Created By</strong>
               {{ post.userName }}
@@ -66,7 +67,7 @@ export default {
   },
   components: {},
   computed: {
-    ...mapState(["posts"]),
+    ...mapState(["posts", "postsFiltered", "loading"]),
 
     formatDate() {
       return (val) => {
