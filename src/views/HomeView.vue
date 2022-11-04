@@ -83,6 +83,7 @@ export default {
   },
   computed: {
     ...mapState(["userProfile", "posts"]),
+
     formatDate() {
       return (val) => {
         if (!val) {
@@ -105,12 +106,16 @@ export default {
   },
   methods: {
     ...mapActions(["createPost", "deletePost"]),
-    createPosts() {
+    async createPosts() {
       const content = this.post.content;
       if (content) {
-        this.createPost(content);
+        try {
+          await this.createPost(content);
+          this.post.content = "";
+        } catch (err) {
+          console.log(err);
+        }
         // this.$store.dispatch("createPost", content);
-        this.post.content = "";
       } else {
         toast.warning("Please Add Post");
       }
