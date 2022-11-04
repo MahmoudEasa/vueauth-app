@@ -179,15 +179,19 @@ const store = createStore({
     },
 
     async deletePost(_, id) {
+      let deleted;
       try {
-        console.log(getDoc(doc(fb.postsCollection, id)));
         await deleteDoc(doc(fb.postsCollection, id));
         getData();
         toast("Deleted Is Done");
+        deleted = true;
       } catch (err) {
-        toast.error(err.message);
+        toast.error("You Can Delete Just Your Posts");
+        deleted = false;
       }
       // fb.postsCollection.doc(id).delete();
+
+      return deleted;
     },
   },
   modules: {},

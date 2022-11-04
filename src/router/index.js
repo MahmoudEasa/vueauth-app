@@ -1,9 +1,10 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
-import AboutView from "../views/AboutView.vue";
 import ForgotPasswordView from "../views/ForgotPasswordView.vue";
 import LoginView from "../views/LoginView.vue";
 import RegisterView from "../views/RegisterView.vue";
+import PostsListView from "../views/PostsListView.vue";
+import PostView from "../views/PostView.vue";
 
 import { auth } from "@/Firebase";
 
@@ -17,9 +18,17 @@ const routes = [
     },
   },
   {
-    path: "/about",
-    name: "AboutView",
-    component: AboutView,
+    path: "/posts",
+    name: "PostsListView",
+    component: PostsListView,
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  {
+    path: "/posts/:id",
+    name: "PostView",
+    component: PostView,
     meta: {
       requiresAuth: true,
     },

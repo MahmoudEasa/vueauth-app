@@ -25,8 +25,8 @@
           >
         </li>
         <li v-if="userProfile" class="nav-item">
-          <router-link :to="{ name: 'AboutView' }" class="nav-link"
-            >About</router-link
+          <router-link :to="{ name: 'PostsListView' }" class="nav-link"
+            >Posts</router-link
           >
         </li>
         <li v-if="!userProfile" class="nav-item">
