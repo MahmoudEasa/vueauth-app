@@ -124,7 +124,8 @@ const store = createStore({
 
         if (
           router.currentRoute.value.path === "/login" ||
-          router.currentRoute.value.path === "/register"
+          router.currentRoute.value.path === "/register" ||
+          router.currentRoute.value.path === "/forgotPassword"
         ) {
           router.push({ name: "HomeView" });
         }
