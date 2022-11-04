@@ -204,7 +204,7 @@ const store = createStore({
         getData();
         toast("Updated Is Done");
       } catch (err) {
-        toast.error(err.message);
+        toast.error("You Can Update Just Your Posts");
       }
     },
 
